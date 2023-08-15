@@ -1,6 +1,9 @@
 const { Sequelize } = require("sequelize");
 
 const sequelize = new Sequelize('diploma', 'postgres', 'admin', {
+  define: {
+    timestamps: false,
+  },
     host: 'localhost',
     dialect:  'postgres'
   });

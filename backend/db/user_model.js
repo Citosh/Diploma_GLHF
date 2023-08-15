@@ -2,25 +2,24 @@ const { DataTypes } = require("sequelize");
 const { sq } = require("./db_connection");
 
 const User = sq.define("user", {
-    email: {
-      type: DataTypes.STRING,
+    id: {
+      type: DataTypes.INTEGER,
       allowNull: false,
+      autoIncrement: true,
       primaryKey: true,
     },
-  
-    fullName: {
+
+    name: {
       type: DataTypes.STRING,
+      allowNull: false
     },
-    
-    age: {
-      type: DataTypes.INTEGER,
+
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false
     },
-  
-    employed: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: false,
-    },
+
   });
 
- 
+
   module.exports = User;
