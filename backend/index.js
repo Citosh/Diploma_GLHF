@@ -20,6 +20,5 @@ User.sync().then(() => {
 
 app.get("/getusers", async (req,res) =>{
     const users = await User.findAll()
-
     res.json(users)
 })
