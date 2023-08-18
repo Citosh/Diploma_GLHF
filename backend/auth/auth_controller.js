@@ -1,7 +1,8 @@
 const bcrypt = require("bcrypt")
-const jwt = require("jsonwebtoken")
+const jwt = require('jsonwebtoken')
 const { validationResult } = require('express-validator')
 const User = require("../db/user_model")
+const Token = require("../middleware/token")
 
 
 class Auth_controller{
@@ -14,7 +15,7 @@ class Auth_controller{
                 return res.status(400).json({message : "Registation error", errors})
             }
             const dbuser = await User.findAll({where: {name : name}})
-            if(dbuser !== null){
+            if(dbuser === null){
                 res.status(400).json(`user with ${name} login already exists`)
             }
             else{
@@ -25,6 +26,8 @@ class Auth_controller{
                     });
                 });
             }
+
+
         } catch (error) {
             res.status(500).json(error)
         }
@@ -34,17 +37,26 @@ class Auth_controller{
         const {name, password} = req.body
         try {
             const db = await User.findOne({ where: {name: name}})
+
             if(db === null){
                 res.status(400).json(`user with ${name} username doesn't exists`)
             }
-            bcrypt.compare(password, db.dataValues.password, function(err, result) {
-                if(result)
-                res.status(200).json("user logged in")
+            bcrypt.compare(password, db.dataValues.password, async function(err, result) {
+                if(result){
+                    const JWT_SECRET = 'your-secret-key';
+                    const token = jwt.sign( {name: db.dataValues.name, role: db.dataValues.role},  JWT_SECRET);
+                    console.log(token)
+                    await User.update({  access_token: token }, {
+                        where: {
+                          name: db.dataValues.name,
+                        },
+                      });
+                    res.status(200).json("user logged in")
+                }
                 else
                 res.status(403).json("wrong password")
             });
         } catch (error) {
-            
         }
     }
 

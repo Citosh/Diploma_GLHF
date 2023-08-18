@@ -19,6 +19,14 @@ const User = sq.define("user", {
       allowNull: false
     },
 
+    role: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: 'USER'
+    },
+    access_token: {
+      type: DataTypes.STRING
+    }
   });
 
 
