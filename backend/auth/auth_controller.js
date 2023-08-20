@@ -59,7 +59,23 @@ class Auth_controller{
         } catch (error) {
         }
     }
-
+    async logout (req,res){
+        const {name} = req.body;
+        try {
+            const db = await User.findOne({ where: {name: name}})
+            if(db === null){
+                res.status(400).json(`user with ${name} username doesn't exists`)
+            }
+            await User.update({  access_token: null }, {
+                where: {
+                  name: db.dataValues.name,
+                },
+              });
+              res.status(200).json("logged out")
+        } catch (error) {
+            res.status(500).json(error)
+        }
+    }
 }
 
 module.exports = new Auth_controller()

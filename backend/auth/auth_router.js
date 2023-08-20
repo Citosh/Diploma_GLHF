@@ -10,7 +10,7 @@ router.post('/reg', [
     check('password', 'password must be between 8 and 16 symbols!').isLength({min: 8, max: 16})
 ], controller.registration)
 router.post('/login', controller.login)
-
+router.post('/logout', controller.logout)
 
 
 
