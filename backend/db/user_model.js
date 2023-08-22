@@ -9,7 +9,7 @@ const User = sq.define("user", {
       primaryKey: true,
     },
 
-    name: {
+    email: {
       type: DataTypes.STRING,
       allowNull: false
     },

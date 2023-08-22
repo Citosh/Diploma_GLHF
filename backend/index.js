@@ -1,19 +1,17 @@
+
 const express = require("express")
 const User = require("./db/user_model")
 const auth_router = require("./auth/auth_router")
-const {sq, testDbConnection} = require("./db/db_connection")
+let cors = require("cors");
+const {testDbConnection} = require("./db/db_connection")
+
 
 
 const app = express()
-app.use(express.json())
 
-const cors = require('cors');
-const corsOptions ={
-    origin:'http://localhost:3000', 
-    credentials:true,            //access-control-allow-credentials:true
-    optionSuccessStatus:200
-}
-app.use(cors(corsOptions));
+app.use(express.json())
+app.use(cors())
+
 
 app.use("/auth",auth_router)
 
@@ -32,8 +30,6 @@ User.sync().then(() => {
     console.log("User Model synced");
   });
 
-
-app.get("/getusers", async (req,res) =>{
-    const users = await User.findAll()
-    res.json(users)
+app.get('/test', (req,res) =>{
+    res.json(process.env.DB_PASSWORD || "gay")
 })
