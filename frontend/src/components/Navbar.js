@@ -19,7 +19,7 @@ const NavBar = observer(() => {
           <NavLink to={MAIN_ROUTE}>Home</NavLink>
             {user.isAuth ? 
               <Nav className="ms-auto">
-                <NavLink to={REGISTRATION_ROUTE}>
+                <NavLink >
                   <Button style={{width:100}}> Profile</Button>
                 </NavLink>
                 <NavLink to={MAIN_ROUTE}>
