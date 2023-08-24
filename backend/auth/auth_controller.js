@@ -44,10 +44,10 @@ class Auth_controller{
             bcrypt.compare(password, db.dataValues.password, async function(err, result) {
                 if(result){
                     console.log(typeof(process.env.JWT_SECRET))
-                    const token = jwt.sign( {email: db.dataValues.email, role: db.dataValues.role},  process.env.JWT_SECRET);
+                    const token = jwt.sign( {email: db.dataValues.id, role: db.dataValues.role},  process.env.JWT_SECRET,{expiresIn: "300m"});
                     await User.update({  access_token: token }, {
                         where: {
-                          email: db.dataValues.email,
+                          id: db.dataValues.id,
                         },
                       });
                     res.status(200).json({

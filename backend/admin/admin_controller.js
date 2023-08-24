@@ -1,8 +1,16 @@
-
+const jwt = require("jsonwebtoken")
+const User = require("../db/models/user_model")
 
 class Admin_controller {
-    getAllUsers(req,res){
-        res.json('<3')
+    async getAllUsers(req,res){
+        try {
+            const users = await User.findAll()
+            res.json(users)
+        } catch (error) {
+            res.status(500).json(error)
+        }
+
+       
     }
 
 
