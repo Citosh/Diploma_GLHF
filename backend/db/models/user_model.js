@@ -11,6 +11,7 @@ const User = sq.define("user", {
 
     email: {
       type: DataTypes.STRING,
+      unique: true,
       allowNull: false
     },
 
@@ -27,6 +28,9 @@ const User = sq.define("user", {
 
     access_token: {
       type: DataTypes.STRING
+    },
+    info: {
+      type: DataTypes.TEXT
     }
   },{
     timestamps : false

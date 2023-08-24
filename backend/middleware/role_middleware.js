@@ -13,17 +13,18 @@ module.exports = function (permitedRoles) {
             if(!token) {
                 res.status(403).json({message : "Пользователь не авторизован"})
             }
+
             const {role} =  jwt.verify(token, process.env.JWT_SECRET)
             let hasRole = false
-            console.log(role)
-            console.log(permitedRoles)
-            if(permitedRoles.includes(role))
-            hasRole = true
-            
+
+            if(permitedRoles.includes(role)){
+                hasRole = true
+            }
             if(!hasRole) {
                 return res.status(403).json({message : "Permission denied"})    
             }
             next()
+            
         } catch (error) {
             console.log(error)
             res.status(403).json({message : "user must be authorized"})
