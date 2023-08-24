@@ -1,7 +1,7 @@
 const Router = require("express")
 const router = Router()
 const controller = require("./auth_controller")
-const {check} = require("express-validator")
+
 
 
 

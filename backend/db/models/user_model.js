@@ -1,12 +1,12 @@
 const { DataTypes } = require("sequelize");
-const { sq } = require("./db_connection");
+const { sq } = require("../db_connection");
 
 const User = sq.define("user", {
     id: {
       type: DataTypes.INTEGER,
+      primaryKey: true,
       allowNull: false,
       autoIncrement: true,
-      primaryKey: true,
     },
 
     email: {
@@ -24,10 +24,18 @@ const User = sq.define("user", {
       allowNull: false,
       defaultValue: 'USER'
     },
+
     access_token: {
       type: DataTypes.STRING
     }
+  },{
+    timestamps : false
   });
+
+  User.sync({alter: true}).then(() => {
+    console.log("User Model synced");
+  });
+
 
 
   module.exports = User;

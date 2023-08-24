@@ -1,7 +1,7 @@
 const bcrypt = require("bcrypt")
 const jwt = require('jsonwebtoken')
-const User = require("../db/user_model")
-const Token = require("../middleware/token")
+const User = require("../db/models/user_model")
+const Token = require("../middleware/auth_middleware")
 
 
 class Auth_controller{
@@ -21,13 +21,11 @@ class Auth_controller{
                     });
                 });
             }
-
-
         } catch (error) {
             res.status(500).json(error)
         }
-
     }
+
     async login (req,res){
         const {email, password} = req.body
         try {
@@ -40,13 +38,15 @@ class Auth_controller{
                 if(result){
                     console.log(typeof(process.env.JWT_SECRET))
                     const token = jwt.sign( {email: db.dataValues.email, role: db.dataValues.role},  process.env.JWT_SECRET);
-                    console.log(token)
                     await User.update({  access_token: token }, {
                         where: {
                           email: db.dataValues.email,
                         },
                       });
-                    res.status(200).json("user logged in")
+                    res.status(200).json({
+                        message : "user logged in successfully",
+                        token: token
+                    })
                 }
                 else
                 res.status(403).json("wrong password")
@@ -54,6 +54,7 @@ class Auth_controller{
         } catch (error) {
         }
     }
+
     async logout (req,res){
         const {name} = req.body;
         try {
