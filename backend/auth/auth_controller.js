@@ -18,7 +18,7 @@ class Auth_controller{
 
             const dbuser = await User.findAll({where: {email : email}})
             if(dbuser.length){
-                res.status(401).json(`user with ${email} login already exists`)
+                res.status(406).json({ message : `user with ${email} login already exists`})
             }
             else{
                 bcrypt.genSalt(7,  function(err, salt) {
