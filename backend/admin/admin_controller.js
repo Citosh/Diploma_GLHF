@@ -43,12 +43,16 @@ class Admin_controller {
                 res.status(400).json({message: `please enter valid roles (${validRoles})`})
             }
 
+            if(role === user.dataValues.role){
+                res.status(400).json({message: `user with id: ${id} already has role ${role}`})
+            }
+
             await User.update({  role: role }, {
                 where: {
                   id: user.dataValues.id,
                 },
               });
-              res.status(200).json(`role changed to ${role} for user with ${id} id` )
+              res.status(200).json({ message: `role changed to ${role} for user with ${id} id`} )
 
         } catch (error) {
             
