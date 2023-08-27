@@ -13,7 +13,7 @@ class Auth_controller{
 
             const errors = validationResult(req)
             if(!errors.isEmpty()){
-                return res.status(400).json({message : "registration error", errors})
+                return res.status(418).json({message : "registration error", errors})
             }
 
             const dbuser = await User.findAll({where: {email : email}})
@@ -39,12 +39,12 @@ class Auth_controller{
             const db = await User.findOne({ where: {email: email}})
 
             if(db === null){
-                res.status(400).json({message: `user with ${email} username doesn't exists`})
+                res.status(400).json({message: `user with ${email} email doesn't exists`})
             }
             bcrypt.compare(password, db.dataValues.password, async function(err, result) {
                 if(result){
                     console.log(typeof(process.env.JWT_SECRET))
-                    const token = jwt.sign( {email: db.dataValues.id, role: db.dataValues.role},  process.env.JWT_SECRET,{expiresIn: "300m"});
+                    const token = jwt.sign( {id: db.dataValues.id, role: db.dataValues.role},  process.env.JWT_SECRET,{expiresIn: "300m"});
                     await User.update({  access_token: token }, {
                         where: {
                           id: db.dataValues.id,
