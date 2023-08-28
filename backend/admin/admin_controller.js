@@ -4,7 +4,7 @@ const User = require("../db/models/user_model")
 class Admin_controller {
     async getAllUsers(req,res){
         try {
-            const users = await User.findAll()
+            const users = await User.findAll({attributes: ['id', 'email', 'role', 'info']})
             res.json(users)
         } catch (error) {
             res.status(500).json(error)
@@ -14,8 +14,10 @@ class Admin_controller {
     async getUserById(req,res){
         try {
             const {id} = req.params;
-
-            const user = await User.findOne({where: {id : id} })
+            const user = await User.findOne({
+                where: {id : id},
+                attributes: ['id', 'email', 'role', 'info']
+            })
             if(!user){
                 res.status(400).json({message: `User with id ${id} not found` })
             }
