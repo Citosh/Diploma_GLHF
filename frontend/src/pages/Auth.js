@@ -1,92 +1,86 @@
+import React, { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { observer } from "mobx-react-lite";
-import React, { useContext, useState } from "react"
-import { Button, Card, Container } from "react-bootstrap"
-import Col from 'react-bootstrap/Col';
-import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
+import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
-import { Context } from ".."
-import { registration } from "../http/userAPI";
-import { REGISTRATION_ROUTE, LOGIN_ROUTE, MAIN_ROUTE } from "../utils/consts";
 
-const Auth = observer(()=>{
-    const {user} = useContext(Context)
+import { Context } from "..";
+import { registration, login} from "../http/userAPI";
+import { MAIN_ROUTE, LOGIN_ROUTE } from "../utils/consts";
+import "./Auth.css";
 
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
+const Auth = observer(() => {
+    const { user } = useContext(Context);
+    const navigate = useNavigate();
 
-    const singIn = async () => {
-        const response = await registration(email, password)
-        console.log (response)
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [message, setMessage] = useState([]);
+
+    const handleAuthentication = async () => {
+        try {
+            let response
+            if(user.isReg) {
+                response = await login(email, password);
+                user.setIsAuth(true);
+                navigate(MAIN_ROUTE);
+            } else {
+                await registration(email, password);
+                alert("Registration successful! Please log in.")
+                setMessage('');
+                setPassword('')
+                user.setIsReg(true)
+                navigate(LOGIN_ROUTE);
+            }
+        } catch (error) {
+            {error.response.data.errors ? 
+                setMessage(error.response.data.errors.errors) 
+                : 
+                setMessage([{msg: error.response.data}])}
+        }
     }
 
     return (
-        <Container 
-        className="d-flex justify-content-center align-items-center"
-        style={{height: window.innerHeight - 60}}
-        >
-            <Card style={{width: 700}} className="p-4 ">
-                {user.isReg ?
-                <h2 className="m-auto "> Log In</h2> 
-                :
-                <h2 className="m-auto "> Registration</h2>
-                }                    
-                    <Form className="pt-3">
-                        <Form.Group as={Row} className="mb-3" controlId="">
-                            <Form.Label column sm="3">Email</Form.Label>
-                            <Col sm="9">
-                                <Form.Control 
-                                    type="email" 
-                                    placeholder="name@example.com"
-                                    value={email}
-                                    onChange={e => setEmail(e.target.value)}
-                                />
-                            </Col>
-                        </Form.Group>
+        <Container className="d-flex justify-content-center align-items-center" style={{ height: window.innerHeight - 60 }}>
+            <Card style={{ width: 700 }} className="p-4">
+                <h2 className="m-auto">{user.isReg ? "Log In" : "Registration"}</h2>
+                
+                {message.length > 0 && (
+                    <div className="error_message mt-3">
+                        {message.map((element, index) => (
+                            <div key={index} style={{ textAlign: "center" }}>
+                                <p>{element.msg}</p>
+                            </div>
+                        ))}
+                    </div>
+                )}
 
-                        <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
-                            <Form.Label column sm="3">
-                            Password
-                            </Form.Label>
-                            <Col sm="9">
-                                <Form.Control 
-                                    type="password" 
-                                    placeholder="Password" 
-                                    value={password}
-                                    onChange={e => setPassword(e.target.value)}
-                                />
-                            </Col>
-                        </Form.Group>
+                <Form className="pt-3">
+                    <Form.Group as={Row} className="mb-3">
+                        <Form.Label column sm="3">Email</Form.Label>
+                        <Col sm="9">
+                            <Form.Control type="email" placeholder="name@example.com" value={email} onChange={e => setEmail(e.target.value)} />
+                        </Col>
+                    </Form.Group>
 
-                        {user.isReg ?
-                        <>
-                            <Form.Group className="mt-3 d-flex justify-content-center align-items-center">
-                                <NavLink to={MAIN_ROUTE}>
-                                    <Button style={{ width: 200 }} onClick={() => { user.setIsAuth(true); } }>Send</Button>
-                                </NavLink>
+                    <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
+                        <Form.Label column sm="3">Password</Form.Label>
+                        <Col sm="9">
+                            <Form.Control type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
+                        </Col>
+                    </Form.Group>
 
-                            </Form.Group>
-                                <Form.Group className="d-flex justify-content-center align-items-center">
-                                    <NavLink onClick={() => { user.setIsReg(false); } } className="mt-3">Registration new account</NavLink>
-                                </Form.Group>
-                        </>
-                        :
-                        <>
-                            <Form.Group className="mt-3 d-flex justify-content-center align-items-center">
-                                <NavLink to={MAIN_ROUTE}>
-                                    <Button style={{ width: 200 }} onClick={singIn}>Send</Button>
-                                </NavLink>
-                            </Form.Group>
-                                <Form.Group className="d-flex justify-content-center align-items-center">
-                                    <NavLink onClick={() => { user.setIsReg(true); } } className="mt-3">Log in</NavLink>
-                                </Form.Group></>
-                        }
-   
-                        </Form>   
-                </Card>
-        
+                    <Form.Group className="mt-3 d-flex justify-content-center align-items-center">
+                        <Button style={{ width: 200 }} onClick={handleAuthentication}>Send</Button>
+                    </Form.Group>
+
+                    <Form.Group className="d-flex justify-content-center align-items-center">
+                        <NavLink onClick={() => (user.setIsReg(!user.isReg), setMessage(''))} className="mt-3">{user.isReg ? "Create new account" : "Log in"}</NavLink>
+                    </Form.Group>
+                </Form>
+            </Card>
         </Container>
-    )
-})
+    );
+});
 
-export default Auth
+export default Auth;

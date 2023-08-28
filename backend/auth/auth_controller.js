@@ -13,18 +13,18 @@ class Auth_controller{
 
             const errors = validationResult(req)
             if(!errors.isEmpty()){
-                return res.status(400).json({message : "registration error", errors})
+                return res.status(400).json({message : "Registration error", errors})
             }
 
             const dbuser = await User.findAll({where: {email : email}})
             if(dbuser.length){
-                res.status(401).json(`user with ${email} login already exists`)
+                res.status(401).json(`User with ${email} login already exists`)
             }
             else{
                 bcrypt.genSalt(7,  function(err, salt) {
                     bcrypt.hash(password, salt, async function(err, hash) {
                         const isAdded = await User.create({email: email, password: hash })
-                        res.status(200).json("user added")
+                        res.status(200).json("User added")
                     });
                 });
             }
@@ -39,7 +39,7 @@ class Auth_controller{
             const db = await User.findOne({ where: {email: email}})
 
             if(db === null){
-                res.status(400).json(`user with ${email} username doesn't exists`)
+                res.status(401).json(`user with ${email} username doesn't exists`)
             }
             bcrypt.compare(password, db.dataValues.password, async function(err, result) {
                 if(result){

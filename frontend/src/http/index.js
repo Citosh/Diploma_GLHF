@@ -1,5 +1,4 @@
 import axios from "axios"
-import { authRoutes } from "../routes"
 
 const $host = axios.create({
     baseURL: process.env.REACT_APP_API_URL

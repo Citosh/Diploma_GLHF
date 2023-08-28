@@ -1,9 +1,13 @@
 import Auth from "./pages/Auth"
 import Test from "./pages/test"
-import { LOGIN_ROUTE, MAIN_ROUTE, REGISTRATION_ROUTE, TEST_ROUTE } from "./utils/consts"
+import Profile from "./pages/Profile"
+import { LOGIN_ROUTE, MAIN_ROUTE, PROFILE_ROUTE, REGISTRATION_ROUTE} from "./utils/consts"
 
 export const authRoutes = [
-
+    {
+        path: PROFILE_ROUTE + '/:id',
+        Component: <Profile></Profile>
+    }
 ]
 
 export const publicRoutes = [
