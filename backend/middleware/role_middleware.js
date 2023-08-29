@@ -16,7 +16,7 @@ module.exports = function (permitedRoles) {
 
             const {role} =  jwt.verify(token, process.env.JWT_SECRET)
             let hasRole = false
-            console.log(role)
+            
             if(permitedRoles.includes(role)){
                 hasRole = true
             }

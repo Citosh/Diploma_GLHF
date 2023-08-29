@@ -2,6 +2,7 @@ const Router = require("express")
 const router = Router()
 const {check} = require("express-validator")
 const controller = require("./auth_controller")
+const authMiddleware = require('../middleware/auth_middleware')
 
 
 
@@ -12,6 +13,7 @@ router.post('/reg',[
 ], controller.registration)
 router.post('/login', controller.login)
 router.post('/logout', controller.logout)
+router.get('/check',authMiddleware(), controller.check)
 
 
 

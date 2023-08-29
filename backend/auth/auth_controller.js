@@ -4,6 +4,16 @@ const User = require("../db/models/user_model")
 const Token = require("../middleware/auth_middleware")
 const { validationResult } = require('express-validator')
 
+
+const generateJwt = (id, email, role) => {
+    return jwt.sign(
+        {id, role},
+        process.env.JWT_SECRET,
+        {expiresIn: '24h'}
+    )
+}
+
+
 class Auth_controller{
 
     async registration (req,res){
@@ -44,7 +54,7 @@ class Auth_controller{
             bcrypt.compare(password, db.dataValues.password, async function(err, result) {
                 if(result){
                     console.log(typeof(process.env.JWT_SECRET))
-                    const token = jwt.sign( {id: db.dataValues.id, role: db.dataValues.role},  process.env.JWT_SECRET,{expiresIn: "300m"});
+                    const token = generateJwt(db.dataValues.id, db.dataValues.role)
                     await User.update({  access_token: token }, {
                         where: {
                           id: db.dataValues.id,
@@ -78,6 +88,10 @@ class Auth_controller{
         } catch (error) {
             res.status(500).json(error)
         }
+    }
+    async check(req, res, next) {
+        const token = generateJwt(req.user.id, req.user.role)
+        return res.json({token})
     }
 }
 
