@@ -13,6 +13,16 @@ export const login = async (email, password) => {
     return jwt_decode(data.token)
 }
 
+export const getUserById = async () => {
+    const {id} = jwt_decode(localStorage.token)
+    const response = await $authHost.get('/admin/user/'+id, { headers: {
+        'Authorization': `Bearer ${localStorage.token}`
+    }})
+    let responseData = JSON.stringify(response.data)
+    console.log(responseData.id)
+    localStorage.setItem('user', responseData)
+}
+
 export const check = async () => {
     const response = await $authHost.post('/reg',)
     return response

@@ -41,45 +41,47 @@ const Auth = observer(() => {
     }
 
     return (
-        <Container className="d-flex justify-content-center align-items-center" style={{ height: window.innerHeight - 60 }}>
-            <Card style={{ width: 700 }} className="p-4">
-                <h2 className="m-auto">{user.isReg ? "Log In" : "Registration"}</h2>
-                
-                {message.length > 0 && (
-                    <div className="error_message mt-3">
-                        {message.map((element, index) => (
-                            <div key={index} style={{ textAlign: "center" }}>
-                                <p>{element.msg}</p>
-                            </div>
-                        ))}
-                    </div>
-                )}
+        <div className="contain">
+            <Container className="d-flex justify-content-center align-items-center" style={{ height: window.innerHeight - 60 }}>
+                <Card style={{ width: 700 }} className="p-4">
+                    <h2 className="m-auto">{user.isReg ? "Log In" : "Registration"}</h2>
+                    
+                    {message.length > 0 && (
+                        <div className="error_message mt-3">
+                            {message.map((element, index) => (
+                                <div key={index} style={{ textAlign: "center" }}>
+                                    <p>{element.msg}</p>
+                                </div>
+                            ))}
+                        </div>
+                    )}
 
-                <Form className="pt-3">
-                    <Form.Group as={Row} className="mb-3">
-                        <Form.Label column sm="3">Email</Form.Label>
-                        <Col sm="9">
-                            <Form.Control type="email" placeholder="name@example.com" value={email} onChange={e => setEmail(e.target.value)} />
-                        </Col>
-                    </Form.Group>
+                    <Form className="pt-3">
+                        <Form.Group as={Row} className="mb-3">
+                            <Form.Label column sm="3">Email</Form.Label>
+                            <Col sm="9">
+                                <Form.Control className="nav_input" type="email" placeholder="name@example.com" value={email} onChange={e => setEmail(e.target.value)} />
+                            </Col>
+                        </Form.Group>
 
-                    <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
-                        <Form.Label column sm="3">Password</Form.Label>
-                        <Col sm="9">
-                            <Form.Control type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
-                        </Col>
-                    </Form.Group>
+                        <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
+                            <Form.Label column sm="3">Password</Form.Label>
+                            <Col sm="9">
+                                <Form.Control className="nav_input" type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
+                            </Col>
+                        </Form.Group>
 
-                    <Form.Group className="mt-3 d-flex justify-content-center align-items-center">
-                        <Button style={{ width: 200 }} onClick={handleAuthentication}>Send</Button>
-                    </Form.Group>
+                        <Form.Group className="mt-3 d-flex justify-content-center align-items-center">
+                            <Button style={{ width: 200 }} className="button" onClick={handleAuthentication}>Send</Button>
+                        </Form.Group>
 
-                    <Form.Group className="d-flex justify-content-center align-items-center">
-                        <NavLink onClick={() => (user.setIsReg(!user.isReg), setMessage(''))} className="mt-3">{user.isReg ? "Create new account" : "Log in"}</NavLink>
-                    </Form.Group>
-                </Form>
-            </Card>
-        </Container>
+                        <Form.Group className="d-flex justify-content-center align-items-center">
+                            <NavLink onClick={() => (user.setIsReg(!user.isReg), setMessage(''))} className="mt-3 nav_link">{user.isReg ? "Create new account" : "Log in"}</NavLink>
+                        </Form.Group>
+                    </Form>
+                </Card>
+            </Container>
+        </div>
     );
 });
 

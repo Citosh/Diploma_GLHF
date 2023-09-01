@@ -5,12 +5,13 @@ import { LOGIN_ROUTE, MAIN_ROUTE, PROFILE_ROUTE, REGISTRATION_ROUTE} from "./uti
 
 export const authRoutes = [
     {
-        path: PROFILE_ROUTE + '/:id',
+        path: PROFILE_ROUTE,
         Component: <Profile></Profile>
-    }
+    },
 ]
 
 export const publicRoutes = [
+
     {
         path: LOGIN_ROUTE,
         Component: <Auth></Auth>

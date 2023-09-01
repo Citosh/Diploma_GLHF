@@ -1,0 +1,25 @@
+.navbar{
+    border-bottom: 3px solid #559c64f6;
+}
+
+.nav-container{
+    width:100%;
+    padding: 0 90px;
+}
+
+.button{
+    width: 100px;
+    background-color: #94faaaf6;
+    border:3px solid #559c64f6;
+    color: black;
+    font-weight: bold;
+}
+
+.button:hover{
+    background-color: #94faaaf6;
+    border:3px solid #559c64f6;
+    color: black;
+    font-weight: bold;
+    box-shadow: 0 0 5px #173a1ef6;
+    outline: none;
+}
