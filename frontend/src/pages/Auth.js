@@ -19,9 +19,8 @@ const Auth = observer(() => {
 
     const handleAuthentication = async () => {
         try {
-            let response
             if(user.isReg) {
-                response = await login(email, password);
+                await login(email, password);
                 user.setIsAuth(true);
                 navigate(MAIN_ROUTE);
             } else {
@@ -60,14 +59,14 @@ const Auth = observer(() => {
                         <Form.Group as={Row} className="mb-3">
                             <Form.Label column sm="3">Email</Form.Label>
                             <Col sm="9">
-                                <Form.Control className="nav_input" type="email" placeholder="name@example.com" value={email} onChange={e => setEmail(e.target.value)} />
+                                <Form.Control className="input" type="email" placeholder="name@example.com" value={email} onChange={e => setEmail(e.target.value)} />
                             </Col>
                         </Form.Group>
 
                         <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
                             <Form.Label column sm="3">Password</Form.Label>
                             <Col sm="9">
-                                <Form.Control className="nav_input" type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
+                                <Form.Control className="input" type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
                             </Col>
                         </Form.Group>
 

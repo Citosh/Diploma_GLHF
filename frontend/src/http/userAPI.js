@@ -14,13 +14,17 @@ export const login = async (email, password) => {
 }
 
 export const getUserById = async () => {
-    const {id} = jwt_decode(localStorage.token)
-    const response = await $authHost.get('/admin/user/'+id, { headers: {
-        'Authorization': `Bearer ${localStorage.token}`
-    }})
-    let responseData = JSON.stringify(response.data)
-    console.log(responseData.id)
-    localStorage.setItem('user', responseData)
+    try {
+        const {id} = jwt_decode(localStorage.token)
+        const response = await $authHost.get('/admin/user/'+id, { headers: {
+            'Authorization': `Bearer ${localStorage.token}`
+        }})
+        let responseData = JSON.stringify(response.data)
+        localStorage.setItem('user', responseData)  
+    } catch (error) {
+        console.log(error)
+    }
+
 }
 
 export const check = async () => {

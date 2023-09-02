@@ -2,11 +2,8 @@ const sequelize = require("sequelize")
 const express = require("express")
 const auth_router = require("./auth/auth_router")
 const admin_router = require("./admin/admin_router")
-const data_gen_router = require("./data_generation/data_gen_router")
 let cors = require("cors");
 const {testDbConnection} = require("./db/db_connection")
-
-
 
 const app = express()
 
@@ -16,11 +13,6 @@ app.use(cors())
 
 app.use('/auth',auth_router)
 app.use('/admin', admin_router)
-app.use('/data', data_gen_router)
-
-
-
-
 
 
 app.listen(5000, () => {

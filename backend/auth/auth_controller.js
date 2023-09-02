@@ -5,7 +5,7 @@ const Token = require("../middleware/auth_middleware")
 const { validationResult } = require('express-validator')
 
 
-const generateJwt = (id, email, role) => {
+const generateJwt = (id, role) => {
     return jwt.sign(
         {id, role},
         process.env.JWT_SECRET,

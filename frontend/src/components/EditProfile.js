@@ -1,7 +1,8 @@
 import React from "react";
-import { Button } from "react-bootstrap";
+import { Button, FormControl } from "react-bootstrap";
 
 const EditProfile = ({ email, setEmail, info, setInfo }) => {
+
   const fields = [
     { label: "E-mail:", value: email, onChange: setEmail },
     { label: "Info:", value: info, onChange: setInfo }
@@ -21,7 +22,8 @@ const EditProfile = ({ email, setEmail, info, setInfo }) => {
           <li key={index} className="profile-ul-li d-flex">
             <div className="li-div-header">{field.label}</div>
             <div className="li-div-content">
-              <input 
+              <FormControl
+                className="profile-inp input"   
                 value={field.value} 
                 onChange={field.onChange ? (e) => field.onChange(e.target.value) : null}
                 readOnly={field.readOnly}
