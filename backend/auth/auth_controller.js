@@ -33,7 +33,7 @@ class Auth_controller{
             else{
                 bcrypt.genSalt(7,  function(err, salt) {
                     bcrypt.hash(password, salt, async function(err, hash) {
-                        const isAdded = await User.create({email: email, password: hash })
+                        await User.create({email: email, password: hash })
                         res.status(200).json({message: "user added"})
                     });
                 });
@@ -51,12 +51,13 @@ class Auth_controller{
             if(db === null){
 
                 res.status(400).json({message: `user with ${email} email doesn't exists`})
-
             }
             bcrypt.compare(password, db.dataValues.password, async function(err, result) {
                 if(result){
-                    console.log(typeof(process.env.JWT_SECRET))
+
                     const token = generateJwt(db.dataValues.id, db.dataValues.role)
+                    console.log(db.dataValues.role)
+                    
                     await User.update({  access_token: token }, {
                         where: {
                           id: db.dataValues.id,
