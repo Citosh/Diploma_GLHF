@@ -1,5 +1,7 @@
 const { DataTypes } = require("sequelize");
 const { sq } = require("../db_connection");
+const Info = require("./info_model")
+
 
 const User = sq.define("user", {
     id: {
@@ -29,17 +31,30 @@ const User = sq.define("user", {
     access_token: {
       type: DataTypes.STRING
     },
-    info: {
-      type: DataTypes.TEXT
-    }
-  },{
-    timestamps : false
   });
 
-  User.sync({alter: true}).then(() => {
+
+
+  User.hasOne(Info)
+  Info.belongsTo(User)
+  
+  User.sync({ alter: true })
+  .then(() => {
     console.log("User Model synced");
+  })
+  .catch((error) => {
+    console.error("Error syncing User Model:", error);
+  });
+
+  Info.sync({ alter: true })
+  .then(() => {
+    console.log("Info Model synced");
+  })
+  .catch((error) => {
+    console.error("Error syncing User Model:", error);
   });
 
 
 
   module.exports = User;
+
