@@ -58,12 +58,7 @@ class Auth_controller{
 
                     const token = generateJwt(db.dataValues.id, db.dataValues.role)
                     console.log(db.dataValues.role)
-                    
-                    await User.update({  access_token: token }, {
-                        where: {
-                          id: db.dataValues.id,
-                        },
-                      });
+
                     res.status(200).json({
                         message : "user logged in successfully",
                         token: token

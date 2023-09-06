@@ -27,10 +27,7 @@ const User = sq.define("user", {
       allowNull: false,
       defaultValue: 'USER'
     },
-
-    access_token: {
-      type: DataTypes.STRING
-    },
+    
     isbanned:{
       type: DataTypes.BOOLEAN,
       defaultValue: false
