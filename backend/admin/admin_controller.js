@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken")
 const User = require("../db/models/user_model")
 
 class Admin_controller {
+
     async getAllUsers(req,res){
         try {
             const users = await User.findAll({attributes: ['id', 'email', 'role', 'info']})
@@ -16,7 +17,7 @@ class Admin_controller {
             const {id} = req.params;
             const user = await User.findOne({
                 where: {id : id},
-                attributes: ['id', 'email', 'role', 'info']
+                attributes: ['id', 'email', 'role']
             })
             if(!user){
                 res.status(400).json({message: `User with id ${id} not found` })
@@ -57,11 +58,77 @@ class Admin_controller {
               res.status(200).json({ message: `role changed to ${role} for user with ${id} id`} )
 
         } catch (error) {
-            
+            res.status(500).json(error)
         }
     }
 
+    async banUserById (req,res){
+        const id = req.params.id
 
+        try {
+            const user = await User.findOne({where: {id: id}})
+            if(!user){
+                res.status(400).json({message: "User not found"})
+            }
+            else if(user.dataValues.isbanned === true){
+                res.status(400).json({message: "User already banned"})
+            }
+            else{
+                await User.update({isbanned: true},{
+                    where: {
+                        id: id
+                    }
+                })
+                res.status(200).json({message: "User banned successfully"})
+            }
+        } catch (error) {
+            res.status(500).json(error)
+        }
+    }
+
+    async unbanUserById (req,res){
+        const id = req.params.id
+
+        try {
+            const user = await User.findOne({where: {id: id}})
+            if(!user){
+                res.status(400).json({message: "User not found"})
+            }
+            else if(user.dataValues.isbanned === false){
+                res.status(400).json({message: "User already unbanned"})
+            }
+            else{
+                await User.update({isbanned: false},{
+                    where: {
+                        id: id
+                    }
+                })
+                res.status(200).json({message: "User unbanned successfully"})
+            }
+        } catch (error) {
+            res.status(500).json(error)
+        }
+    }
+
+    async getBanList (req,res){
+        try {
+            const bannedUsers = await User.findAll({
+                where: {
+                    isbanned : true
+                },
+                attributes: ['id', 'email', 'role']
+            })
+            console.log(![] == true)
+            if(bannedUsers.length === 0){
+                res.status(200).json({message: "No banned users"})
+            }
+            else{
+                res.status(200).json(bannedUsers)
+            }
+        } catch (error) {
+            res.status(500).json(error)
+        }
+    }
 }
 
 module.exports = new Admin_controller()
