@@ -22,8 +22,17 @@
     font-weight: bold;
 }
 
-.profile_btn_group{
-    align-items: center;
+.profile-info{
+
+    padding-left: 20%;
+}
+
+.btn-container{
+    height:100em;
+    padding-top: 66px;
+    position: fixed;
+    width: 20%;
+    border-right:3px solid #559c64f6;
 }
 
 .custom-btn:hover{
@@ -64,11 +73,7 @@ li {
 }
 
 .li-div-header{
- width: 200px;
-}
-
-.li-div-content{
-
+ width: 300px;
 }
 
 .changePassword-btn{
@@ -88,6 +93,21 @@ li {
     font-weight: bold;
     box-shadow: 0 0 5px #173a1ef6;
     outline: none;
+}
+
+.profile-inp{
+    width: 400px
+}
+
+.profile-error-message{
+    width:700px;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    background-color: rgba(255, 0, 0, 0.3);
+    border-radius: 10px;
+    padding-top: 12px;
+    border: 2px solid red;
+    font-weight: bold;
 }
 
 

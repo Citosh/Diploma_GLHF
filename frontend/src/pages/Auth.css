@@ -19,11 +19,11 @@
     color: #1d3021f6;
 }
 
-.nav_input{
+.input{
     border: 2px solid #559c64f6;
 }
 
-.nav_input:focus{
+.input:focus{
     border: 2px solid #559c64f6;
     box-shadow: 0 0 5px #173a1ef6;
     outline: none;

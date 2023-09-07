@@ -1,14 +1,18 @@
 .navbar{
-    border-bottom: 3px solid #559c64f6;
+    height: 58px;
+    background-color: white;
 }
 
 .nav-container{
+    border-bottom: 3px solid #559c64f6;
+    background-color: white;
     width:100%;
-    padding: 0 90px;
+    position: fixed;
+    padding: 7px 90px;
 }
 
 .button{
-    width: 100px;
+    width: 130px;
     background-color: #94faaaf6;
     border:3px solid #559c64f6;
     color: black;

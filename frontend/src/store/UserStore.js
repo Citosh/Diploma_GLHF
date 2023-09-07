@@ -5,6 +5,7 @@ export default class UserStore {
         this._isAuth = false
         this._isReg = true
         this._user = {}
+        this._isAdmin = false
         makeAutoObservable(this)
     }
 
@@ -20,12 +21,21 @@ export default class UserStore {
         this._user = user
     }
 
+    setIsAdmin(bool){
+        this._isAdmin = bool
+    }
+
+
     get isAuth (){
         return this._isAuth
     }
 
     get isReg(){
         return this._isReg
+    }
+
+    get isAdmin(){
+        return this._isAdmin
     }
 
     get user (){
