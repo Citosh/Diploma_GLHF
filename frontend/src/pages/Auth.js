@@ -3,9 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
+import jwt_decode from "jwt-decode"
 
 import { Context } from "..";
-import { registration, login} from "../http/userAPI";
+import { registration, login, getUserById} from "../http/userAPI";
 import { MAIN_ROUTE, LOGIN_ROUTE } from "../utils/consts";
 import "./Auth.css";
 
@@ -19,23 +20,43 @@ const Auth = observer(() => {
 
     const handleAuthentication = async () => {
         try {
+            let response
+            let errors = []
             if(user.isReg) {
-                await login(email, password);
-                user.setIsAuth(true);
-                navigate(MAIN_ROUTE);
+                response = await login(email, password);
+                const {role} = jwt_decode(response.data.token)
+                if(response.status < 400){
+                    await getUserById()
+                    user.setIsAuth(true);
+                    if(role == "ADMIN")
+                        user.setIsAdmin(true)
+                    navigate(MAIN_ROUTE);
+                }
+                else {
+                    errors.push({msg: response.response.data.message})
+                    setMessage(errors)
+                }
             } else {
-                await registration(email, password);
-                alert("Registration successful! Please log in.")
-                setMessage('');
-                setPassword('')
-                user.setIsReg(true)
-                navigate(LOGIN_ROUTE);
+                response = await registration(email, password);
+                if(response.status<400){
+                    alert("Registration successful! Please log in.")
+                    setMessage('');
+                    setPassword('')
+                    user.setIsReg(true)
+                    navigate(LOGIN_ROUTE);
+                }
+                else {
+                    if(response.response.data.errors.length === 0){
+                        errors.push({msg: response.response.data.message})
+                    }
+                    else 
+                        errors.push({msg: response.response.data.errors.errors[0].msg})
+                
+                    setMessage(errors)
+                }
             }
         } catch (error) {
-            {error.response.data.errors ? 
-                setMessage(error.response.data.errors.errors) 
-                : 
-                setMessage([{msg: error.response.data}])}
+           
         }
     }
 

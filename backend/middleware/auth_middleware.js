@@ -4,7 +4,7 @@ module.exports = function (){
     return function (req, res, next){
         try {
             if(!req.headers.authorization) {
-                res.status(401).json({message : "user must be authorized"})
+                res.status(401).json({message : "User must be authorized"})
             }
             else{
                 const token = req.headers.authorization.split(' ')[1]

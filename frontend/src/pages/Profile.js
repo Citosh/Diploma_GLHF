@@ -5,14 +5,17 @@ import "./Profile.css";
 import ChangePassword from "../components/ChangePassword";
 import EditProfile from "../components/EditProfile";
 import UserProfile from "../components/UserProfile";
+import ChangeEmail from "../components/ChangeEmail";
 
 const Profile = observer(() => {
-  const [target, setTarget] = useState(0);
   const profileButtonRef = useRef(null);
   const userinfo = JSON.parse(localStorage.user)
-  const [email, setEmail] = useState(userinfo.email);
-  const [info, setInfo] = useState(userinfo.info || "");
 
+  const [target, setTarget] = useState(0);
+  const [info, setInfo] = useState(userinfo.info || "");
+  const [lastName, setLastName] = useState(userinfo.lastName || "");
+  const [surname, setSurname] = useState(userinfo.surname || "");
+  const [phone, setPhone] = useState(userinfo.phone || "");
 
   useEffect(() => {
     profileButtonRef.current.focus();
@@ -27,15 +30,23 @@ const Profile = observer(() => {
     case 1:
       content = (
         <EditProfile
-          email={email}
-          setEmail={setEmail}
           info={info}
           setInfo={setInfo}
+          lastName={lastName}
+          setLastName={setLastName}
+          surname={surname}
+          setSurname={setSurname}
+          phone={phone}
+          setPhone={setPhone}
         />
       );
       break;
     case 2:
       content = (<ChangePassword/>)
+      break;
+
+    case 3:
+      content = (<ChangeEmail userinfo={userinfo} />)
       break;
     default:
       content = <div>Select an option</div>;
@@ -54,8 +65,11 @@ const Profile = observer(() => {
               <div className="div">
                 <Button className="custom-btn" onClick={()=> setTarget(2)}>Change password</Button>
               </div>
+              <div className="div">
+                <Button className="custom-btn" onClick={()=> setTarget(3)}>Change e-mail</Button>
+              </div>
             </Col>
-            <Col sm="10">
+            <Col sm="10" className="profile-info">
               {content}
             </Col>
         </div>  

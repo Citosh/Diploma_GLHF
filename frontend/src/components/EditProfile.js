@@ -1,13 +1,15 @@
 import React from "react";
 import { Button, FormControl } from "react-bootstrap";
 
-const EditProfile = ({ email, setEmail, info, setInfo }) => {
+const EditProfile = ({ info, setInfo, lastName, setLastName, surname, setSurname, phone, setPhone }) => {
 
   const fields = [
-    { label: "E-mail:", value: email, onChange: setEmail },
-    { label: "Info:", value: info, onChange: setInfo }
-  ];
-
+    { label: "Info:", value: info, onChange: setInfo },
+    { label: "Last name:", value: lastName, onChange: setLastName },
+    { label: "Surname:", value: surname, onChange: setSurname },
+    { label: "Phone:", value: phone, onChange: setPhone },
+    ];
+    
   const handleSaveChanges = () => {
     
   };
