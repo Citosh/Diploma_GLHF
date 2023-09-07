@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt")
 const jwt = require('jsonwebtoken')
 const User = require("../db/models/user_model")
+const Info = require("../db/models/info_model")
 const Token = require("../middleware/auth_middleware")
 const { validationResult } = require('express-validator')
 
@@ -28,12 +29,13 @@ class Auth_controller{
 
             const dbuser = await User.findAll({where: {email : email}})
             if(dbuser.length){
-                res.status(406).json({message : `user with ${email} login already exists`})
+                res.status(406).json({message : `user with ${email} email already exists`})
             }
             else{
                 bcrypt.genSalt(7,  function(err, salt) {
                     bcrypt.hash(password, salt, async function(err, hash) {
-                        await User.create({email: email, password: hash })
+                        const user = await User.create({email: email, password: hash })
+                        await Info.create({userId: user.dataValues.id});
                         res.status(200).json({message: "user added"})
                     });
                 });
@@ -56,12 +58,17 @@ class Auth_controller{
                 if(result){
 
                     const token = generateJwt(db.dataValues.id, db.dataValues.role)
+<<<<<<< HEAD
                     
                     await User.update({  access_token: token }, {
                         where: {
                           id: db.dataValues.id,
                         },
                       });
+=======
+                    console.log(db.dataValues.role)
+
+>>>>>>> 8cc182159ca4efcc3ec2bcb7c1659c84a27ebd47
                     res.status(200).json({
                         message : "user logged in successfully",
                         token: token
