@@ -29,12 +29,13 @@ class Auth_controller{
 
             const dbuser = await User.findAll({where: {email : email}})
             if(dbuser.length){
-                res.status(406).json({message : `user with ${email} login already exists`})
+                res.status(406).json({message : `user with ${email} email already exists`})
             }
             else{
                 bcrypt.genSalt(7,  function(err, salt) {
                     bcrypt.hash(password, salt, async function(err, hash) {
-                        await User.create({email: email, password: hash })
+                        const user = await User.create({email: email, password: hash })
+                        await Info.create({userId: user.dataValues.id});
                         res.status(200).json({message: "user added"})
                     });
                 });

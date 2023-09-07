@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken")
 const User = require("../db/models/user_model")
+const Info = require("../db/models/info_model")
 
 class Admin_controller {
 
@@ -17,7 +18,8 @@ class Admin_controller {
             const {id} = req.params;
             const user = await User.findOne({
                 where: {id : id},
-                attributes: ['id', 'email', 'role']
+                attributes: ['id', 'email', 'role'],
+                include: Info,
             })
             if(!user){
                 res.status(400).json({message: `User with id ${id} not found` })

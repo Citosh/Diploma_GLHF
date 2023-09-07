@@ -8,6 +8,4 @@ const Info = sq.define("info", {
     }
   });
 
- 
-  
  module.exports = Info;
