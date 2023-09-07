@@ -56,19 +56,7 @@ class Auth_controller{
             }
             bcrypt.compare(password, db.dataValues.password, async function(err, result) {
                 if(result){
-
                     const token = generateJwt(db.dataValues.id, db.dataValues.role)
-<<<<<<< HEAD
-                    
-                    await User.update({  access_token: token }, {
-                        where: {
-                          id: db.dataValues.id,
-                        },
-                      });
-=======
-                    console.log(db.dataValues.role)
-
->>>>>>> 8cc182159ca4efcc3ec2bcb7c1659c84a27ebd47
                     res.status(200).json({
                         message : "user logged in successfully",
                         token: token
