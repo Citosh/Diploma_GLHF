@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt')
 
 
 class UserController {
+    
     async change_email(req,res){
         const {new_email, password} = req.body
         try {
