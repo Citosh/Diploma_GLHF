@@ -5,14 +5,16 @@ const bcrypt = require('bcrypt')
 
 class UserController {
     async change_email(req,res){
-        const {new_email} = req.body
-
+        const {new_email, password} = req.body
         try {
             const dbUser = await User.findOne({where: {id: req.user.id}})
-            if(dbUser.dataValues.email == new_email){
+            const comp = bcrypt.compareSync(password, dbUser.dataValues.password)
+            if(!comp){
+                res.status(403).json({message: "Wrong password"})
+            }
+            else if(dbUser.dataValues.email == new_email){
                 res.status(400).json({message: "You cannot change email to previous!"})
             }
-            
             else {
                 await User.update({email: new_email},{
                     where:{

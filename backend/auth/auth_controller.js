@@ -72,27 +72,12 @@ class Auth_controller{
         }
     }
 
-    async logout (req,res){
-        const {email} = req.body;
-        try {
-            const db = await User.findOne({ where: {email: email}})
-            if(db === null){
-                res.status(400).json({message: `user with ${email} email doesn't exists`})
-            }
-            await User.update({  access_token: null }, {
-                where: {
-                    email: db.dataValues.email,
-                },
-              });
-              res.status(200).json({message: "logged out"})
-        } catch (error) {
-            res.status(500).json(error)
-        }
-    }
     async check(req, res, next) {
         const token = generateJwt(req.user.id, req.user.role)
         return res.json({token})
     }
+
+    
 }
 
 module.exports = new Auth_controller()

@@ -12,5 +12,6 @@ router.put('/setrole/:id', roleMiddleware(['USER']), controller.setRoleById )
 router.put('/banuser/:id', roleMiddleware(['USER']), controller.banUserById)
 router.put('/unbanuser/:id', roleMiddleware(['USER']), controller.unbanUserById)
 router.get('/banlist', roleMiddleware(['USER']), controller.getBanList)
+router.delete('/deleteuser/:id', roleMiddleware(['USER']), controller.deleteUserById)
 
 module.exports = router

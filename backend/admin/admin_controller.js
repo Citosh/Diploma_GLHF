@@ -131,6 +131,10 @@ class Admin_controller {
             res.status(500).json(error)
         }
     }
+
+    async deleteUserById(req,res){
+        
+    }
 }
 
 module.exports = new Admin_controller()
