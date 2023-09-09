@@ -1,6 +1,7 @@
 const User = require('../db/models/user_model')
 const Info = require('../db/models/info_model')
 const bcrypt = require('bcrypt')
+const { parsePhoneNumberFromString, format } = require('libphonenumber-js');
 
 
 
@@ -63,13 +64,13 @@ class UserController {
             res.status(500).json(error)
         }
     }
-    
-    async changeUserInfo(req,res) {
+
+    async changeUserInfo(req, res) {
         const { id } = req.params;
         const { firstname, lastname, phonenumber } = req.body;
 
         try {
-          const info = await Info.findOne({where: {userId: id }});
+          const info = await Info.findOne({ where: { userId: id } });
 
           if (!info) {
             return res.status(404).json({ message: 'User not found' });
@@ -77,7 +78,22 @@ class UserController {
 
           if (firstname) info.firstname = firstname;
           if (lastname) info.lastname = lastname;
-          if (phonenumber) info.phonenumber = phonenumber;
+
+          if (phonenumber) {
+            try {
+                const parsedPhoneNumber = parsePhoneNumberFromString(phonenumber, 'UA');
+
+              if (!parsedPhoneNumber || !parsedPhoneNumber.isValid()) {
+                return res.status(400).json({ message: 'Invalid phone number' });
+              }
+
+              const formattedPhoneNumber = format(parsedPhoneNumber.number, 'E.164');
+
+              info.phonenumber = formattedPhoneNumber;
+            } catch (error) {
+              return res.status(400).json({ message: 'Invalid phone number format' });
+            }
+          }
 
           await info.save();
 
@@ -86,7 +102,7 @@ class UserController {
           console.error(error);
           return res.status(500).json({ message: 'Internal server error' });
         }
-    }
+      }
 }
 
 

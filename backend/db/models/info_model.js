@@ -10,7 +10,7 @@ const Info = sq.define("info", {
         type: DataTypes.STRING
     },
     phonenumber:{
-        type: DataTypes.INTEGER
+        type: DataTypes.STRING
     }
   });
 
