@@ -133,7 +133,24 @@ class Admin_controller {
     }
 
     async deleteUserById(req,res){
-        
+        const id = req.params.id
+        try {
+            const user = await User.destroy({
+                where: {
+                    id: id
+                }
+            })
+            if(!user){
+                res.status(400).json({message: "User not found"})
+            }
+            else{
+                await Info.destroy({where: {id: id}})
+                res.status(200).json({message: "User deleted successfully"})
+            }
+        } catch (error) {
+            res.status(500).json(error)
+        }
+       
     }
 }
 

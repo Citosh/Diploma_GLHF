@@ -1,10 +1,11 @@
 const User = require('../db/models/user_model')
+const Info = require('../db/models/info_model')
 const bcrypt = require('bcrypt')
 
 
 
 class UserController {
-    
+
     async change_email(req,res){
         const {new_email, password} = req.body
         try {
@@ -28,7 +29,6 @@ class UserController {
             res.status(500).json(error)
         }
     }
-
 
     async change_pass(req, res) {
         const {prev_pass, new_pass} = req.body
@@ -63,8 +63,32 @@ class UserController {
             res.status(500).json(error)
         }
     }
+    
+    async changeUserInfo(req,res) {
+        const { id } = req.params;
+        const { firstname, lastname, phonenumber } = req.body;
+
+        try {
+          const info = await Info.findOne({where: {userId: id }});
+
+          if (!info) {
+            return res.status(404).json({ message: 'User not found' });
+          }
+
+          if (firstname) info.firstname = firstname;
+          if (lastname) info.lastname = lastname;
+          if (phonenumber) info.phonenumber = phonenumber;
+
+          await info.save();
+
+          return res.status(200).json({ message: 'User updated successfully' });
+        } catch (error) {
+          console.error(error);
+          return res.status(500).json({ message: 'Internal server error' });
+        }
+    }
 }
-   
+
 
 
 
