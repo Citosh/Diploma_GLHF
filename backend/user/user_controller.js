@@ -1,13 +1,13 @@
-const User = require('../db/models/user_model')
-const Info = require('../db/models/info_model')
-const bcrypt = require('bcrypt')
-const { parsePhoneNumberFromString, format } = require('libphonenumber-js');
+const User = require("../db/models/user_model")
+const Info = require("../db/models/info_model")
+const bcrypt = require("bcrypt")
+const { parsePhoneNumberFromString, format } = require("libphonenumber-js");
 
 
 
 class UserController {
 
-    async change_email(req,res){
+    async changeEmail(req,res){
         const {new_email, password} = req.body
         try {
             const dbUser = await User.findOne({where: {id: req.user.id}})
@@ -31,7 +31,7 @@ class UserController {
         }
     }
 
-    async change_pass(req, res) {
+    async changePass(req, res) {
         const {prev_pass, new_pass} = req.body
 
         try {
@@ -102,7 +102,7 @@ class UserController {
           console.error(error);
           return res.status(500).json({ message: 'Internal server error' });
         }
-      }
+    }
 }
 
 
