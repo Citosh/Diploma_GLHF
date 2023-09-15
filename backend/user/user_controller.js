@@ -67,8 +67,8 @@ class UserController {
     }
 
     async changeUserInfo(req, res) {
-        const { id } = req.params;
-        const { firstname, lastname, phonenumber } = req.body;
+        const {id} = req.user
+        const { companyname, phonenumber } = req.body;
 
         try {
           const info = await Info.findOne({ where: { userId: id } });
@@ -77,9 +77,7 @@ class UserController {
             return res.status(404).json({ message: 'User not found' });
           }
 
-          if (firstname) info.firstname = firstname;
-          if (lastname) info.lastname = lastname;
-
+          if (companyname) info.companyname = companyname;
           if (phonenumber) {
             try {
                 const parsedPhoneNumber = parsePhoneNumberFromString(phonenumber, 'UA');
@@ -105,7 +103,7 @@ class UserController {
     }
 
     async setUserData(req, res) {
-        const {id} = req.params
+        const {id} = req.user
         const {quantity, date} = req.body
         try {
             const datePattern = /^\d{4}-\d{2}-\d{2}$/;

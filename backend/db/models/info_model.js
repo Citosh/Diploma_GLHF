@@ -3,10 +3,7 @@ const { sq } = require("../db_connection");
 
 
 const Info = sq.define("info", {
-    firstname:{
-        type: DataTypes.STRING
-    },
-    lastname:{
+    companyname:{
         type: DataTypes.STRING
     },
     phonenumber:{

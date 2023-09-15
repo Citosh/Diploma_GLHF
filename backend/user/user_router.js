@@ -6,8 +6,8 @@ const authMiddleware = require('../middleware/auth_middleware')
 
 router.put('/changepass', authMiddleware(), controller.changePass )
 router.put('/changeemail', authMiddleware(), controller.changeEmail)
-router.put('/changedetails/:id', authMiddleware(), controller.changeUserInfo)
-router.put('/setdata/:id', authMiddleware(), controller.setUserData)
+router.put('/changedetails', authMiddleware(), controller.changeUserInfo)
+router.put('/setdata', authMiddleware(), controller.setUserData)
 router.get('/getdata', authMiddleware(), controller.getUserData)
 
 
