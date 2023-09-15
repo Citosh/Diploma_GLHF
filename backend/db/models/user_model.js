@@ -1,6 +1,7 @@
 const { DataTypes } = require("sequelize");
 const { sq } = require("../db_connection");
 const Info = require("./info_model")
+const Data = require("./data_model")
 
 
 const User = sq.define("user", {
@@ -36,23 +37,19 @@ const User = sq.define("user", {
 
   User.hasOne(Info)
   Info.belongsTo(User)
+  User.hasMany(Data)
+  Data.belongsTo(User)
+
   
-  User.sync({ alter: true })
+  sq.sync({ alter: true })
   .then(() => {
-    console.log("User Model synced");
+    console.log("Database synced");
   })
   .catch((error) => {
     console.error("Error syncing User Model:", error);
   });
 
-  Info.sync({ alter: true })
-  .then(() => {
-    console.log("Info Model synced");
-  })
-  .catch((error) => {
-    console.error("Error syncing User Model:", error);
-  });
-
+ 
 
 
   module.exports = User;

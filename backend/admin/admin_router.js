@@ -14,4 +14,5 @@ router.put('/unbanuser/:id', roleMiddleware(['ADMIN']), controller.unbanUserById
 router.get('/banlist', roleMiddleware(['ADMIN']), controller.getBanList)
 router.delete('/deleteuser/:id', roleMiddleware(['ADMIN']), controller.deleteUserById)
 
+
 module.exports = router

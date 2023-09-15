@@ -1,5 +1,6 @@
 const User = require("../db/models/user_model")
 const Info = require("../db/models/info_model")
+const Data = require("../db/models/data_model")
 const bcrypt = require("bcrypt")
 const { parsePhoneNumberFromString, format } = require("libphonenumber-js");
 
@@ -99,10 +100,42 @@ class UserController {
 
           return res.status(200).json({ message: 'User updated successfully' });
         } catch (error) {
-          console.error(error);
-          return res.status(500).json({ message: 'Internal server error' });
+          return res.status(500).json({ message: 'Internal server error', error });
         }
     }
+
+    async setUserData(req, res) {
+        const {id} = req.params
+        const {quantity, date} = req.body
+        try {
+            const datePattern = /^\d{4}-\d{2}-\d{2}$/;
+            if(!datePattern.test(date)){
+                res.status(400).json({message: "Invalid date format"})
+            }
+            else{
+                await Data.create({userId: id, quantity: quantity, date: date})
+                res.status(200).json({message: "Data seted successfully"})
+            }
+        } catch (error) {
+            res.status(500).json(error)
+        }
+       
+    }
+
+    async getUserData(req, res) {
+        const {id} = req.user
+        try {
+            const data = await Data.findAll({
+                where: {
+                    userId: id
+                }
+            })
+            res.status(200).json(data)
+        } catch (error) {
+            res.status(500).json(error)
+        }
+    }
+
 }
 
 

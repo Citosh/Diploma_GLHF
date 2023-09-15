@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken")
 const User = require("../db/models/user_model")
 const Info = require("../db/models/info_model")
+const Data = require("../db/models/data_model")
 
 class Admin_controller {
 
@@ -120,7 +121,6 @@ class Admin_controller {
                 },
                 attributes: ['id', 'email', 'role']
             })
-            console.log(![] == true)
             if(bannedUsers.length === 0){
                 res.status(200).json({message: "No banned users"})
             }
@@ -152,6 +152,7 @@ class Admin_controller {
         }
        
     }
+
 }
 
 module.exports = new Admin_controller()

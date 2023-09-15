@@ -74,7 +74,6 @@ class Auth_controller{
         return res.json({token})
     }
 
-    
 }
 
 module.exports = new Auth_controller()
