@@ -9,7 +9,6 @@ module.exports = function (permitedRoles) {
             next()
         } 
         try {
-            console.log(req.headers)
             const token = req.headers.authorization.split(' ')[1]
             if(!token) {
                 res.status(403).json({message : "user is not authorized"})

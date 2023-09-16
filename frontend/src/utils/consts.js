@@ -4,3 +4,4 @@ export const REGISTRATION_ROUTE = '/registration'
 export const MAIN_ROUTE = '/'
 export const TEST_ROUTE = '/test'
 export const PROFILE_ROUTE = '/profile'
+

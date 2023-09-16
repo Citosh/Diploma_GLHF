@@ -1,0 +1,73 @@
+.scrollable-container {
+    margin-left: 32px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 8px 12px;
+    text-align: left;
+}
+
+th:nth-child(1) {
+    width: 20%; 
+}
+
+th:nth-child(2) {
+    width: 40%;
+}
+
+th:nth-child(3) {
+    width: 10%;
+}
+
+th:nth-child(4) {
+    width: 15%;
+}
+
+.ban-btn {
+    width: 80px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.unban-btn {
+    width: 80px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.search-input {
+    width: 82.5%;
+    padding: 8px 12px;
+    margin-bottom: 16px;
+    border: 1px solid #559c64f6 ;
+    border-radius: 4px;
+    float: left; 
+}
+
+.search-btn{
+    width: 130px;
+    background-color: #94faaaf6;
+    border:3px solid #559c64f6;
+    color: black;
+    font-weight: bold;
+}
+
+
+

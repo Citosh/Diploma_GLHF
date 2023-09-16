@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Context } from "..";
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -7,6 +7,7 @@ import { Button } from "react-bootstrap";
 import { observer } from "mobx-react-lite";
 import { REGISTRATION_ROUTE, LOGIN_ROUTE, MAIN_ROUTE, PROFILE_ROUTE, ADMIN_ROUTE } from "../utils/consts";
 import "./NavBar.css";
+
 
 const NavBar = observer(() => {
     const {user} = useContext(Context);

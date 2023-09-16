@@ -8,7 +8,7 @@ export const adminRoutes =[
     {
         path: ADMIN_ROUTE,
         Component: <Admin></Admin>
-    }
+    },
 ]
 
 export const authRoutes = [

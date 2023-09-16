@@ -28,7 +28,7 @@ const Auth = observer(() => {
                 if(response.status < 400){
                     await getUserById()
                     user.setIsAuth(true);
-                    if(role == "ADMIN")
+                    if(role === "ADMIN")
                         user.setIsAdmin(true)
                     navigate(MAIN_ROUTE);
                 }
