@@ -1,9 +1,12 @@
-const { DataTypes } = require("sequelize");
+const { DataTypes, UUID } = require("sequelize");
 const { sq } = require("../db_connection");
 
 
 const Info = sq.define("info", {
-    text:{
+    companyname:{
+        type: DataTypes.STRING
+    },
+    phonenumber:{
         type: DataTypes.STRING
     }
   });

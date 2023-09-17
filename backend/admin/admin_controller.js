@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken")
 const User = require("../db/models/user_model")
 const Info = require("../db/models/info_model")
+const Data = require("../db/models/data_model")
 
 class Admin_controller {
 
@@ -120,7 +121,6 @@ class Admin_controller {
                 },
                 attributes: ['id', 'email', 'role']
             })
-            console.log(![] == true)
             if(bannedUsers.length === 0){
                 res.status(200).json({message: "No banned users"})
             }
@@ -133,8 +133,26 @@ class Admin_controller {
     }
 
     async deleteUserById(req,res){
-        
+        const id = req.params.id
+        try {
+            const user = await User.destroy({
+                where: {
+                    id: id
+                }
+            })
+            if(!user){
+                res.status(400).json({message: "User not found"})
+            }
+            else{
+                await Info.destroy({where: {id: id}})
+                res.status(200).json({message: "User deleted successfully"})
+            }
+        } catch (error) {
+            res.status(500).json(error)
+        }
+       
     }
+
 }
 
 module.exports = new Admin_controller()

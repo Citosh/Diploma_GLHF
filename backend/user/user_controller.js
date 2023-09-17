@@ -1,11 +1,14 @@
-const User = require('../db/models/user_model')
-const bcrypt = require('bcrypt')
+const User = require("../db/models/user_model")
+const Info = require("../db/models/info_model")
+const Data = require("../db/models/data_model")
+const bcrypt = require("bcrypt")
+const { parsePhoneNumberFromString, format } = require("libphonenumber-js");
 
 
 
 class UserController {
-    
-    async change_email(req,res){
+
+    async changeEmail(req,res){
         const {new_email, password} = req.body
         try {
             const dbUser = await User.findOne({where: {id: req.user.id}})
@@ -29,8 +32,7 @@ class UserController {
         }
     }
 
-
-    async change_pass(req, res) {
+    async changePass(req, res) {
         const {prev_pass, new_pass} = req.body
 
         try {
@@ -63,8 +65,77 @@ class UserController {
             res.status(500).json(error)
         }
     }
+
+    async changeUserInfo(req, res) {
+        const {id} = req.user
+        const { companyname, phonenumber } = req.body;
+
+        try {
+          const info = await Info.findOne({ where: { userId: id } });
+
+          if (!info) {
+            return res.status(404).json({ message: 'User not found' });
+          }
+
+          if (companyname) info.companyname = companyname;
+          if (phonenumber) {
+            try {
+                const parsedPhoneNumber = parsePhoneNumberFromString(phonenumber, 'UA');
+
+              if (!parsedPhoneNumber || !parsedPhoneNumber.isValid()) {
+                return res.status(400).json({ message: 'Invalid phone number' });
+              }
+
+              const formattedPhoneNumber = format(parsedPhoneNumber.number, 'E.164');
+
+              info.phonenumber = formattedPhoneNumber;
+            } catch (error) {
+              return res.status(400).json({ message: 'Invalid phone number format' });
+            }
+          }
+
+          await info.save();
+
+          return res.status(200).json({ message: 'User updated successfully' });
+        } catch (error) {
+          return res.status(500).json({ message: 'Internal server error', error });
+        }
+    }
+
+    async setUserData(req, res) {
+        const {id} = req.user
+        const {quantity, date} = req.body
+        try {
+            const datePattern = /^\d{4}-\d{2}-\d{2}$/;
+            if(!datePattern.test(date)){
+                res.status(400).json({message: "Invalid date format"})
+            }
+            else{
+                await Data.create({userId: id, quantity: quantity, date: date})
+                res.status(200).json({message: "Data seted successfully"})
+            }
+        } catch (error) {
+            res.status(500).json(error)
+        }
+       
+    }
+
+    async getUserData(req, res) {
+        const {id} = req.user
+        try {
+            const data = await Data.findAll({
+                where: {
+                    userId: id
+                }
+            })
+            res.status(200).json(data)
+        } catch (error) {
+            res.status(500).json(error)
+        }
+    }
+
 }
-   
+
 
 
 

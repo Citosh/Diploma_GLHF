@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken')
 const User = require("../db/models/user_model")
 const Info = require("../db/models/info_model")
 const Token = require("../middleware/auth_middleware")
-const { validationResult } = require('express-validator')
+const { validationResult } = require("express-validator")
 
 
 const generateJwt = (id, role) => {
@@ -74,7 +74,6 @@ class Auth_controller{
         return res.json({token})
     }
 
-    
 }
 
 module.exports = new Auth_controller()
