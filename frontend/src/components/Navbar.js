@@ -5,7 +5,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import { NavLink } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import { observer } from "mobx-react-lite";
-import { REGISTRATION_ROUTE, LOGIN_ROUTE, MAIN_ROUTE, PROFILE_ROUTE, ADMIN_ROUTE } from "../utils/consts";
+import { REGISTRATION_ROUTE, LOGIN_ROUTE, MAIN_ROUTE, PROFILE_ROUTE, ADMIN_ROUTE, GRAPHIC_ROUTE } from "../utils/consts";
 import "./NavBar.css";
 
 
@@ -25,8 +25,11 @@ const NavBar = observer(() => {
                 
                 {user.isAuth ? 
                     <Nav className="ms-auto">
+                        <NavLink to={GRAPHIC_ROUTE}>
+                            <Button className="button">Graph</Button>
+                        </NavLink>
                         <NavLink to={PROFILE_ROUTE}>
-                            <Button className="button">Profile</Button>
+                            <Button className="button ms-2">Profile</Button>
                         </NavLink>
                         <NavLink to={LOGIN_ROUTE}>
                             <Button onClick={() => {

@@ -1,8 +1,9 @@
 import Auth from "./pages/Auth"
 import Test from "./pages/test"
 import Profile from "./pages/Profile"
-import { ADMIN_ROUTE, LOGIN_ROUTE, MAIN_ROUTE, PROFILE_ROUTE, REGISTRATION_ROUTE} from "./utils/consts"
+import { ADMIN_ROUTE, GRAPHIC_ROUTE, LOGIN_ROUTE, MAIN_ROUTE, PROFILE_ROUTE, REGISTRATION_ROUTE} from "./utils/consts"
 import Admin from "./pages/Admin"
+import Graph from "./pages/Graph"
 
 export const adminRoutes =[
     {
@@ -16,6 +17,10 @@ export const authRoutes = [
         path: PROFILE_ROUTE,
         Component: <Profile></Profile>
     },
+    {
+        path: GRAPHIC_ROUTE,
+        Component: <Graph></Graph>
+    }
 ]
 
 export const publicRoutes = [

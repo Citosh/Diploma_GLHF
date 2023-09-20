@@ -1,10 +1,12 @@
 import React from "react";
 
 const UserProfile = ({ userinfo }) => {
+  console.log(userinfo)
   const userFields = [
     { label: "UID:", value: userinfo.id },
     { label: "E-mail:", value: userinfo.email },
-    { label: "Info:", value: userinfo.info || "empty" }
+    { label: "Company:", value: userinfo.info?.companyname },
+    { label: "Phone Number:", value: userinfo.info?.phonenumber },
   ];
 
   return (

@@ -13,7 +13,7 @@ const App = observer(() =>{
 
   useEffect(() => {
     check().then(data=>{
-      if(data.status < 400){
+      if(data?.status < 400){
         user.setIsAuth(true)
         if(data.role === "ADMIN")
           user.setIsAdmin(true)

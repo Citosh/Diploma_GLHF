@@ -76,6 +76,25 @@ export const changeEmail = async (newEmail, password) =>{
     }
 }
 
+export const updateInformation = async (companyname, phonenumber) => {
+    try {
+        const response = await $authHost.put('/user/changedetails',            
+        {
+            companyname: companyname,
+            phonenumber: phonenumber
+        },
+        {
+            headers: {
+            "Authorization": `Bearer ${localStorage.token}`
+            }
+        } )
+        console.log(response)
+        return response
+    } catch (error) {
+        return error
+    }
+}
+
 export const check = async () => {
     try {
         const response = await $authHost.get('/auth/check',{ headers: {

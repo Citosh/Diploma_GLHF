@@ -1,0 +1,45 @@
+.table-btn{
+    width: 150px;
+    background-color: #94faaaf6;
+    border:3px solid #559c64f6;
+    color: black;
+    font-weight: bold;
+}
+
+.table-btn:hover{
+    background-color: #94faaaf6;
+    border:3px solid #559c64f6;
+    color: black;
+    font-weight: bold;
+    box-shadow: 0 0 5px #173a1ef6;
+    outline: none;
+}
+
+.table-btn:focus{
+    border: 3px solid #2f613af6;
+    background-color: #459155f6;
+
+}
+
+.contain{
+    margin-left: 32px;
+}
+
+.table-name-input{
+    border: 3px solid #559c64f6;
+    border-radius: 7px;
+    height: 40px;
+}
+
+.bordere{
+    border: solid 3px red;
+}
+
+.h5{
+    padding-top: 10px;
+    height: 33px;
+}
+
+.table-input{
+    height: 42px;
+}

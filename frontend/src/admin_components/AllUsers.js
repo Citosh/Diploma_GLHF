@@ -69,7 +69,6 @@ const AllUsers = () => {
   return (
     <div className="scrollable-container">
       <h2 className="profile-h">All Users</h2>
-      <h5>Search by e-mail</h5>
       <div>
         <input 
           type="text" 
