@@ -1,8 +1,12 @@
+const fs = require("fs")
+const path = require('path');
 const User = require("../db/models/user_model")
 const Info = require("../db/models/info_model")
 const Data = require("../db/models/data_model")
+const FileData = require("../db/models/fileData_model")
 const bcrypt = require("bcrypt")
 const { parsePhoneNumberFromString, format } = require("libphonenumber-js");
+const { resolve } = require("dns/promises");
 
 
 
@@ -104,14 +108,14 @@ class UserController {
 
     async setUserData(req, res) {
         const {id} = req.user
-        const {quantity, date} = req.body
+        const {name,quantity, date} = req.body
         try {
             const datePattern = /^\d{4}-\d{2}-\d{2}$/;
             if(!datePattern.test(date)){
                 res.status(400).json({message: "Invalid date format"})
             }
             else{
-                await Data.create({userId: id, quantity: quantity, date: date})
+                await Data.create({userId: id, name:name, quantity: quantity, date: date})
                 res.status(200).json({message: "Data seted successfully"})
             }
         } catch (error) {
@@ -134,6 +138,81 @@ class UserController {
         }
     }
 
+    async setFileData(req,res) {
+        const {fileObj, fileName} = req.body
+        const {id} = req.user
+
+        try {
+            const jsonString = JSON.stringify(fileObj);
+
+            const fileNameToSave = `${fileName}.json`
+
+            const pathForCreateIfNotExists = path.join(__dirname, 'file_data', `${id}`)
+            const relativePath = path.join('file_data', `${id}`, fileNameToSave)
+            const filePath = path.join(__dirname, relativePath);
+
+            await fs.promises.mkdir(pathForCreateIfNotExists,{ recursive: true }, (error) => {
+                if(error.code = 'EEXIST'){
+                    console.log('already exists')
+                }
+            })
+
+            const userData = await FileData.findAll({where: {userId: id}})
+
+            let alreadyExists = false
+            userData.forEach(elem => {
+                if(elem.dataValues.path.split('\\')[2] === fileNameToSave){
+                    alreadyExists = true
+                }
+            })
+
+            if(alreadyExists){
+                res.status(400).json({message: "File with this name already exists!"})
+            }
+            else{
+            await fs.promises.writeFile(filePath, jsonString, 'utf-8');
+            await FileData.create({userId: id, path: relativePath})
+
+            res.status(200).json({message: "File saved successfully"})
+            }
+        } catch (error) {
+            console.log(error)
+            res.status(500).json(error);
+        }
+    }
+
+    async getFileNames(req,res) {
+        const {id} = req.user
+        try {
+            const fileNames = await FileData.findAll({
+                where: {userId: id},
+                attributes: ['path']
+            })
+            if(fileNames.length === 0){
+                res.status(400).json({message: "You dont have any files!"})
+            }
+            else{
+                let result = new Array()
+                fileNames.forEach(elem =>{
+                    result.push(elem.dataValues.path)
+                })
+                res.status(200).json(result)
+            }
+        } catch (error) {
+            res.status(500).json(error)
+        }
+    }
+
+    async getFileDataByName(req,res) {
+        const {fileName} = req.body
+        const {id} = req.user
+        try {
+            const fileData = await fs.promises.readFile( path.join(__dirname,'file_data', `${id}`, `${fileName}.json`),'utf8')
+            res.status(200).json(fileData)
+        } catch (error) {
+            res.status(500).json(error)
+        }
+    }
 }
 
 
