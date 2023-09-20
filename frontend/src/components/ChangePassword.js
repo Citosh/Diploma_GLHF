@@ -3,15 +3,8 @@ import { Button, FormControl } from "react-bootstrap";
 import { changePassword } from "../http/userAPI";
 import "../pages/Profile.css";
 import { observer } from "mobx-react-lite";
+import { ErrorMessage } from "./Errors";
 
-const ErrorMessage = ({ text }) => {
-  if (!text) return null;
-  return (
-    <div className="profile-error-message">
-      {text}
-    </div>
-  );
-};
 
 const ChangePassword = observer(() => {
   const [previousPassword, setPreviousPassword] = useState("");
@@ -35,7 +28,6 @@ const ChangePassword = observer(() => {
     }
   
     setErrorMessage(errors);
-    console.log(errorMessage)
     if(errors.length === 0){
       try {
         const response = await changePassword(previousPassword, newPassword)

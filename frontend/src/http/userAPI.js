@@ -57,10 +57,56 @@ export const changePassword = async (prev_pass, new_pass) =>{
     }
 }
 
+export const changeEmail = async (newEmail, password) =>{
+    try {
+        const response = await $authHost.put('/user/changeemail',  
+            {
+                new_email: newEmail,
+                password: password
+            },
+            {
+                headers: {
+                "Authorization": `Bearer ${localStorage.token}`
+                }
+            }
+        )
+        return response
+    } catch (error) {
+        return error
+    }
+}
+
+export const updateInformation = async (companyname, phonenumber) => {
+    try {
+        const response = await $authHost.put('/user/changedetails',            
+        {
+            companyname: companyname,
+            phonenumber: phonenumber
+        },
+        {
+            headers: {
+            "Authorization": `Bearer ${localStorage.token}`
+            }
+        } )
+        console.log(response)
+        return response
+    } catch (error) {
+        return error
+    }
+}
+
 export const check = async () => {
-    const {data} = await $authHost.get('/auth/check',{ headers: {
-        'Authorization': `Bearer ${localStorage.token}`
-    }})
-    localStorage.setItem('token', data.token)
-    return jwt_decode(data.token)
+    try {
+        const response = await $authHost.get('/auth/check',{ headers: {
+            'Authorization': `Bearer ${localStorage.token}`
+        }})
+        let decodedData = jwt_decode(response.data.token)
+        localStorage.setItem('token', response.data.token)
+        return {status: response.status,
+                role: decodedData.role
+        }
+    } catch (error) {
+        return error.response
+    }
+
 }

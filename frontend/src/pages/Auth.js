@@ -28,7 +28,7 @@ const Auth = observer(() => {
                 if(response.status < 400){
                     await getUserById()
                     user.setIsAuth(true);
-                    if(role == "ADMIN")
+                    if(role === "ADMIN")
                         user.setIsAdmin(true)
                     navigate(MAIN_ROUTE);
                 }
@@ -63,7 +63,7 @@ const Auth = observer(() => {
     return (
         <div className="contain">
             <Container className="d-flex justify-content-center align-items-center" style={{ height: window.innerHeight - 60 }}>
-                <Card style={{ width: 700 }} className="p-4">
+                <Card style={{ width: 700 }} className="p-4 " >
                     <h2 className="m-auto">{user.isReg ? "Log In" : "Registration"}</h2>
                     
                     {message.length > 0 && (

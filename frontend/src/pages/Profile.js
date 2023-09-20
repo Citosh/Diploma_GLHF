@@ -12,9 +12,7 @@ const Profile = observer(() => {
   const userinfo = JSON.parse(localStorage.user)
 
   const [target, setTarget] = useState(0);
-  const [info, setInfo] = useState(userinfo.info || "");
-  const [lastName, setLastName] = useState(userinfo.lastName || "");
-  const [surname, setSurname] = useState(userinfo.surname || "");
+  const [companyName, setCompanyName] = useState(userinfo.lastName || "");
   const [phone, setPhone] = useState(userinfo.phone || "");
 
   useEffect(() => {
@@ -30,12 +28,8 @@ const Profile = observer(() => {
     case 1:
       content = (
         <EditProfile
-          info={info}
-          setInfo={setInfo}
-          lastName={lastName}
-          setLastName={setLastName}
-          surname={surname}
-          setSurname={setSurname}
+          companyName={companyName}
+          setCompanyName={setCompanyName}
           phone={phone}
           setPhone={setPhone}
         />
