@@ -213,6 +213,21 @@ class UserController {
             res.status(500).json(error)
         }
     }
+
+    async deleteFileByName(req,res) {
+        const {fileName} = req.body
+        const {id} = req.user
+        try {
+            const correctPath = path.join('file_data',`${id}`, `${fileName}.json`)
+
+            await FileData.destroy({where: {path: correctPath}})
+            fs.promises.unlink(path.join(__dirname,correctPath))
+
+            res.status(200).json({message: "File deleted successufully"})
+        } catch (error) {
+            res.status(500).json(error)
+        }
+    }
 }
 
 
