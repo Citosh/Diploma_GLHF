@@ -108,7 +108,7 @@ class UserController {
 
     async setUserData(req, res) {
         const {id} = req.user
-        const {name,quantity, date} = req.body
+        const {name, quantity, date} = req.body
         try {
             const datePattern = /^\d{4}-\d{2}-\d{2}$/;
             if(!datePattern.test(date)){
