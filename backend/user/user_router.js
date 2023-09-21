@@ -10,8 +10,9 @@ router.put('/changedetails', authMiddleware(), controller.changeUserInfo)
 router.put('/setdata', authMiddleware(), controller.setUserData)
 router.get('/getdata', authMiddleware(), controller.getUserData)
 router.put('/filedata', authMiddleware(), controller.setFileData) 
-router.get('/filenames', authMiddleware(), controller.getFileNames)
 router.get('/filedata', authMiddleware(), controller.getFileDataByName)
+router.delete('/filedata', authMiddleware(), controller.deleteFileByName)
+router.get('/filenames', authMiddleware(), controller.getFileNames)
 
 
 /* route put/filedata recieved : 
