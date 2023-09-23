@@ -12,6 +12,7 @@ const App = observer(() =>{
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+
     check().then(data=>{
       if(data?.status < 400){
         user.setIsAuth(true)
@@ -22,7 +23,7 @@ const App = observer(() =>{
         user.setIsAuth(false);
         user.setIsAdmin(false);
         user.setIsReg(true);
-        localStorage.removeItem("user")
+        localStorage.clear();
       }
     }).finally(()=> setLoading(false))
   }, [user])

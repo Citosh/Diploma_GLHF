@@ -43,3 +43,42 @@
 .table-input{
     height: 42px;
 }
+
+.table-error-message{
+    width: 525px;
+    text-align: center;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    background-color: rgba(255, 0, 0, 0.3);
+    border-radius: 10px;
+    padding-top: 12px;
+    border: 2px solid red;
+    font-weight: bold;
+}
+
+.upload-btn{
+    height: 42px;
+    text-align: center;
+    padding-top: 6px;
+    border-radius: 7px;
+    width: 150px;
+    background-color: #94faaaf6;
+    border:3px solid #559c64f6;
+    color: black;
+    font-weight: bold;
+}
+
+.upload-btn:hover{
+    background-color: #94faaaf6;
+    border:3px solid #559c64f6;
+    color: black;
+    font-weight: bold;
+    box-shadow: 0 0 5px #173a1ef6;
+    outline: none;
+}
+
+.upload-btn:focus{
+    border: 3px solid #2f613af6;
+    background-color: #459155f6;
+
+}

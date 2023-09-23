@@ -61,7 +61,9 @@ const AllUsers = () => {
     setShowModal(false);
   };
 
+  
   let allUsers = JSON.parse(localStorage.users);
+
   const sortedUsers = [...allUsers].sort((a, b) => a.id - b.id);
   const [emailSearchValue, setEmailSearchValue] = useState("");
   const [filteredUsers, setFilteredUsers] = useState(sortedUsers);

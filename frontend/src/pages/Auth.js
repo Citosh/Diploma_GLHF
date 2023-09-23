@@ -63,11 +63,11 @@ const Auth = observer(() => {
     return (
         <div className="contain">
             <Container className="d-flex justify-content-center align-items-center" style={{ height: window.innerHeight - 60 }}>
-                <Card style={{ width: 700 }} className="p-4 " >
+                <Card style={{ width: 700 }}  className={`p-4`} >
                     <h2 className="m-auto">{user.isReg ? "Log In" : "Registration"}</h2>
                     
                     {message.length > 0 && (
-                        <div className="error_message mt-3">
+                       <div className="error_message mt-3">
                             {message.map((element, index) => (
                                 <div key={index} style={{ textAlign: "center" }}>
                                     <p>{element.msg}</p>

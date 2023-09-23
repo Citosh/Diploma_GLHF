@@ -1,7 +1,7 @@
-export const ErrorMessage = ({ text }) => {
+export const ErrorMessage = ({ className ,text }) => {
     if (!text) return null;
     return (
-      <div className="profile-error-message">
+      <div className={className}>
         {text}
       </div>
     );

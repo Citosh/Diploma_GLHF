@@ -55,7 +55,7 @@ const ChangePassword = observer(() => {
       <ul className="profile-ul">
         <li className="profile-ul-li">
       {errorMessage.map((error, index) => (
-        <ErrorMessage key={index} text={error.msg} />
+        <ErrorMessage className= {"profile-error-message"} key={index} text={error.msg} />
       ))}
         <div className="d-flex">
           <div className="li-div-header">Old Password:</div>

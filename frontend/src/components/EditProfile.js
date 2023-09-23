@@ -15,7 +15,7 @@ const EditProfile = ({ companyName, setCompanyName, phone, setPhone }) => {
 
   const handleSaveChanges = async () => {
     try {
-      const errorData = []
+      let errorData = []
       const response = await updateInformation(companyName, phone);
       if (response.status != 200) {
         errorData = response?.response?.data?.message;
@@ -36,9 +36,8 @@ const EditProfile = ({ companyName, setCompanyName, phone, setPhone }) => {
       </div>
 
       <ul className="profile-ul">
-        {console.log(errorMessage)}
       {errorMessage != null && errorMessage.map((error, index) => (
-        <ErrorMessage className="profile-error-message" key={index} text={error.msg} />
+        <ErrorMessage className= {"profile-error-message"} key={index} text={error.msg} />
       ))}
         {fields.map((field, index) => (
           <li key={index} className="profile-ul-li d-flex">

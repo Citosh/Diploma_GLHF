@@ -95,6 +95,80 @@ export const updateInformation = async (companyname, phonenumber) => {
     }
 }
 
+export const sendUserTable = async (data) => {
+    try {
+        const response = await $authHost.put('/user/filedata',             
+        {
+            fileObj: data.fileObj,
+            fileName: data.fileName
+        },         
+        {
+            headers: 
+            {
+            "Authorization": `Bearer ${localStorage.token}`
+            }
+        })
+        return response
+    } catch (error) {
+        return error
+
+    }
+}
+
+export const getTablesName = async () => {
+    try {
+        const response = await $authHost.put('/user/filenames',  {},   
+        {
+            headers: 
+            {
+            "Authorization": `Bearer ${localStorage.token}`
+            }
+        })
+        return response
+    } catch (error) {
+        console.log(error)
+        return error
+    }
+}
+
+export const getTableDataByName = async (fileName) => {
+    try {
+        const response = await $authHost.post('/user/filedata',               
+        { 
+            fileName: fileName
+        }, 
+        
+        {
+            headers: 
+            {
+                "Authorization": `Bearer ${localStorage.token}`
+            }
+        });
+        return response;
+    } catch (error) {
+        console.log(error);
+        return error;
+    }
+}
+
+export const deleteTable = async (fileName) =>{
+    try {
+        const respose = await $authHost.patch('/user/filedata',
+        {
+            fileName: fileName
+        },
+        {
+            headers: 
+            {
+                "Authorization": `Bearer ${localStorage.token}`
+            }
+        })
+        return respose.status
+    } catch (error) {
+       return error
+    }
+}
+
 export const check = async () => {
     try {
         const response = await $authHost.get('/auth/check',{ headers: {

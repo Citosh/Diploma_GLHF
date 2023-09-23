@@ -7,6 +7,7 @@ import { Button } from "react-bootstrap";
 import { observer } from "mobx-react-lite";
 import { REGISTRATION_ROUTE, LOGIN_ROUTE, MAIN_ROUTE, PROFILE_ROUTE, ADMIN_ROUTE, GRAPHIC_ROUTE } from "../utils/consts";
 import "./NavBar.css";
+import { getAllUsers } from "../http/adminAPI";
 
 
 const NavBar = observer(() => {
@@ -19,7 +20,9 @@ const NavBar = observer(() => {
                 <Nav className="ms-auto">
                 {user.isAdmin === true && 
                     <NavLink to={ADMIN_ROUTE}>
-                        <Button className="button me-2">Admin menu</Button>
+                        <Button className="button me-2" onClick={()=>{
+                            getAllUsers()
+                        }}>Admin menu</Button>
                     </NavLink>
                 }
                 

@@ -9,8 +9,11 @@ export const getAllUsers = async () => {
             }
         }
         )
-        let responseData = JSON.stringify(response.data)
-        localStorage.setItem('users', responseData)
+        if (response && response.data) {
+            let responseData = JSON.stringify(response.data);
+            console.log(responseData)
+            localStorage.setItem('users', responseData);
+        }
         return response 
     } catch (error) {
         console.log(error) 
