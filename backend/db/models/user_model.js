@@ -1,7 +1,6 @@
 const { DataTypes } = require("sequelize");
 const { sq } = require("../db_connection");
 const Info = require("./info_model")
-const Data = require("./data_model")
 const FileData = require("./fileData_model")
 
 
@@ -38,8 +37,6 @@ const User = sq.define("user", {
 
   User.hasOne(Info)
   Info.belongsTo(User)
-  User.hasMany(Data)
-  Data.belongsTo(User)
   User.hasMany(FileData)
   FileData.belongsTo(User)
 

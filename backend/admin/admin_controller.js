@@ -1,7 +1,6 @@
 const jwt = require("jsonwebtoken")
 const User = require("../db/models/user_model")
 const Info = require("../db/models/info_model")
-const Data = require("../db/models/data_model")
 
 class Admin_controller {
 

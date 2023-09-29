@@ -2,7 +2,6 @@ const fs = require("fs")
 const path = require('path');
 const User = require("../db/models/user_model")
 const Info = require("../db/models/info_model")
-const Data = require("../db/models/data_model")
 const FileData = require("../db/models/fileData_model")
 const bcrypt = require("bcrypt")
 const { parsePhoneNumberFromString, format } = require("libphonenumber-js");
@@ -14,11 +13,15 @@ class UserController {
 
     async changeEmail(req,res){
         const {new_email, password} = req.body
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
         try {
             const dbUser = await User.findOne({where: {id: req.user.id}})
             const comp = bcrypt.compareSync(password, dbUser.dataValues.password)
             if(!comp){
                 res.status(403).json({message: "Wrong password"})
+            }
+            else if(!emailRegex.test(new_email)){
+                res.status(400).json({message: "Email must be valid!"})
             }
             else if(dbUser.dataValues.email == new_email){
                 res.status(400).json({message: "You cannot change email to previous!"})
@@ -103,38 +106,6 @@ class UserController {
           return res.status(200).json({ message: 'User updated successfully' });
         } catch (error) {
           return res.status(500).json({ message: 'Internal server error', error });
-        }
-    }
-
-    async setUserData(req, res) {
-        const {id} = req.user
-        const {name, quantity, date} = req.body
-        try {
-            const datePattern = /^\d{4}-\d{2}-\d{2}$/;
-            if(!datePattern.test(date)){
-                res.status(400).json({message: "Invalid date format"})
-            }
-            else{
-                await Data.create({userId: id, name:name, quantity: quantity, date: date})
-                res.status(200).json({message: "Data seted successfully"})
-            }
-        } catch (error) {
-            res.status(500).json(error)
-        }
-       
-    }
-
-    async getUserData(req, res) {
-        const {id} = req.user
-        try {
-            const data = await Data.findAll({
-                where: {
-                    userId: id
-                }
-            })
-            res.status(200).json(data)
-        } catch (error) {
-            res.status(500).json(error)
         }
     }
 

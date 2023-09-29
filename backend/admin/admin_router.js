@@ -6,8 +6,7 @@ const roleMiddleware = require("../middleware/role_middleware")
 
 
 
-router.get('/users', roleMiddleware(['ADMIN']), controller.getAllUsers )
-
+router.get('/users', roleMiddleware(['ADMIN']), controller.getAllUsers ) 
 router.get('/user/:id', roleMiddleware(['USER','ADMIN']), controller.getUserById)
 router.put('/setrole/:id', roleMiddleware(['ADMIN']), controller.setRoleById )
 router.put('/banuser/:id', roleMiddleware(['ADMIN']), controller.banUserById)
