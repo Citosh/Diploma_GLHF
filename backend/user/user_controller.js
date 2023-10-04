@@ -150,7 +150,52 @@ class UserController {
             console.log(error)
             res.status(500).json(error);
         }
-    }
+    } //fs.promisses
+
+
+    // async setFileData(req,res) {
+    //     const {fileObj, fileName} = req.body
+    //     const {id} = req.user
+
+    //     try {
+    //         const jsonString = JSON.stringify(fileObj);
+
+    //         const fileNameToSave = `${fileName}.json`
+
+    //         const pathForCreateIfNotExists = path.join(__dirname, 'file_data', `${id}`)
+    //         const relativePath = path.join('file_data', `${id}`, fileNameToSave)
+    //         const filePath = path.join(__dirname, relativePath);
+
+    //         await fs.promises.mkdir(pathForCreateIfNotExists,{ recursive: true }, (error) => {
+    //             if(error.code = 'EEXIST'){
+    //                 console.log('already exists')
+    //             }
+    //         })
+
+    //         const userData = await FileData.findAll({where: {userId: id}})
+
+    //         let alreadyExists = false
+    //         userData.forEach(elem => {
+    //             if(elem.dataValues.path.split('\\')[2] === fileNameToSave){
+    //                 alreadyExists = true
+    //             }
+    //         })
+
+    //         if(alreadyExists){
+    //             res.status(400).json({message: "File with this name already exists!"})
+    //         }
+    //         else{
+    //         fs.writeFileSync(filePath, jsonString, 'utf-8');
+    //         await FileData.create({userId: id, path: relativePath})
+
+    //         res.status(200).json({message: "File saved successfully"})
+    //         }
+    //     } catch (error) {
+    //         console.log(error)
+    //         res.status(500).json(error);
+    //     }
+    // } // WriteFileSyn
+
 
     async getFileNames(req,res) {
         const {id} = req.user
@@ -183,7 +228,20 @@ class UserController {
         } catch (error) {
             res.status(500).json(error)
         }
-    }
+    } // fs.promisses
+
+
+    // async getFileDataByName(req,res) {
+    //     const {fileName} = req.body
+    //     const {id} = req.user
+    //     try {
+    //         const fileData =  fs.readFileSync( path.join(__dirname,'file_data', `${id}`, `${fileName}.json`),'utf8')
+    //         res.status(200).json(fileData)
+    //     } catch (error) {
+    //         res.status(500).json(error)
+    //     }
+    // } //fs.readFileSync
+
 
     async deleteFileByName(req,res) {
         const {fileName} = req.body
