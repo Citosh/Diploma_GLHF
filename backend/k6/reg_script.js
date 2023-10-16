@@ -6,7 +6,7 @@ let userCounter = 1;
 
 export let options = {
   vus: 1,
-  iterations: 5,
+  iterations: 10,
 };
 
 export default async function () {

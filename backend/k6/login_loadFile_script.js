@@ -1,17 +1,17 @@
 import http from 'k6/http';
-import { check } from 'k6';
+import { check, sleep } from 'k6';
 
 
 let userCounter = 0;
 
 export let options = {
-  vus: 1,
-  iterations: 5,
+  vus: 20,
+  iterations: 20,
 };
 
 export default async function () {
 
-
+  //console.log('user start')
 
   userCounter++;
 
@@ -20,7 +20,6 @@ export default async function () {
     email: `user_${userCounter}@example.com`,
     password: 'password123',
   };
-
 
   const params = {
     headers: {
@@ -36,7 +35,7 @@ export default async function () {
     'Registration was successful': (res) => res.status === 200,
   });
 
-
+  sleep(1)
   const fileObj = {
     "Object1": {
       "date": "2021-07-31T18:59:38.281Z",
@@ -5039,7 +5038,7 @@ export default async function () {
       "quantity": 83
     }
   }
-  const fileName = "test"
+  const fileName = Math.floor(Math.random() * 10000) + 1
 
   const fileData = {
     fileObj: fileObj,
@@ -5054,7 +5053,7 @@ export default async function () {
   };
 
   const responseFromFileCreation = http.put('http://localhost:5000/user/filedata', JSON.stringify(fileData), paramsForPut);
-
+  //console.log('user end')
   check(responseFromFileCreation, {
     'File creation was successful': (res) => res.status === 200,
   });

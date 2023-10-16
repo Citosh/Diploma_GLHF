@@ -5,8 +5,8 @@ import { check } from 'k6';
 let userCounter = 0;
 
 export let options = {
-  vus: 1,
-  iterations: 5,
+  vus: 20,
+  iterations: 20,
 };
 
 export default async function () {
@@ -37,7 +37,7 @@ export default async function () {
   });
 
 
-  const fileName = "test"
+  const fileName = "108"
 
   const fileData = {
     fileName: fileName
@@ -52,9 +52,10 @@ export default async function () {
 
   const responseFromFileCreation = http.post('http://localhost:5000/user/filedata', JSON.stringify(fileData), paramsForPut);
   check(responseFromFileCreation, {
-    'File creation was successful': (res) => res.status === 200,
+    'File reading was successful': (res) => res.status === 200,
   });
 }
+
 
 
 
